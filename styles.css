@@ -76,7 +76,8 @@ h2 {
 }
 
 .capture-panel,
-.result-panel {
+.result-panel,
+.recent-panel {
   padding: clamp(1.25rem, 4vw, 2.25rem);
   border: 1px solid #d7d5c9;
   border-radius: 1.25rem;
@@ -204,6 +205,10 @@ textarea[aria-invalid="true"] {
   margin-top: 1.25rem;
 }
 
+.recent-panel {
+  margin-top: 1.25rem;
+}
+
 .result-heading h2 {
   margin-bottom: 0;
 }
@@ -234,13 +239,77 @@ textarea[aria-invalid="true"] {
   line-height: 1.65;
 }
 
+.result-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.result-actions .primary-button {
+  margin-top: 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-heading h2,
+.record-count {
+  margin-bottom: 0;
+}
+
+.record-count,
+.empty-state,
+.record-date {
+  color: #6b726a;
+  font-size: 0.85rem;
+}
+
+.recent-records {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recent-record {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.25fr) 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #dde0d8;
+  border-radius: 0.8rem;
+  background: #fffffc;
+}
+
+.record-date {
+  margin: 0;
+}
+
+.record-summary {
+  margin: 0;
+  overflow: hidden;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty-state {
+  margin: 1.5rem 0 0;
+}
+
 @media (max-width: 620px) {
   .app-shell {
     padding-top: 2.5rem;
   }
 
   .source-fields,
-  .sentence-card {
+  .sentence-card,
+  .recent-record {
     grid-template-columns: 1fr;
   }
 

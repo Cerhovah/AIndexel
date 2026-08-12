@@ -31,3 +31,32 @@ export function renderAnalysis(resultElement, analysis) {
 export function clearAnalysis(resultElement) {
   resultElement.hidden = true;
 }
+
+export function renderRecentRecords(listElement, records) {
+  if (records.length === 0) {
+    const emptyState = document.createElement("li");
+    emptyState.className = "empty-state";
+    emptyState.textContent = "아직 저장된 기록이 없습니다.";
+    listElement.replaceChildren(emptyState);
+    return;
+  }
+
+  const items = records.map((record) => {
+    const item = document.createElement("li");
+    item.className = "recent-record";
+
+    const date = document.createElement("time");
+    date.className = "record-date";
+    date.dateTime = record.createdAt;
+    date.textContent = record.createdAtLabel;
+
+    const summary = document.createElement("p");
+    summary.className = "record-summary";
+    summary.textContent = record.summary;
+
+    item.append(date, summary);
+    return item;
+  });
+
+  listElement.replaceChildren(...items);
+}

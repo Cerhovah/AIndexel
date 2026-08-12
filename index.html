@@ -80,6 +80,20 @@
             <dd id="result-next"></dd>
           </div>
         </dl>
+
+        <div class="result-actions">
+          <button id="save-button" class="primary-button" type="button" disabled>저장</button>
+          <p id="save-status" class="status-message" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="recent-panel" aria-labelledby="recent-title">
+        <div class="section-heading">
+          <h2 id="recent-title">최근 기록</h2>
+          <p id="record-count" class="record-count">0건</p>
+        </div>
+        <p id="records-status" class="status-message" role="status" aria-live="polite"></p>
+        <ol id="recent-records" class="recent-records"></ol>
       </section>
     </main>
     <script type="module" src="./src/app.js"></script>
