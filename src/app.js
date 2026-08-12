@@ -52,6 +52,7 @@ const numberFormatter = new Intl.NumberFormat("ko-KR");
 
 let isAnalyzing = false;
 let hasAnalysis = false;
+let didAnalyzeFail = false;
 let pendingRecord = null;
 let shouldRequestPersistence = false;
 let allRecords = [];
@@ -131,6 +132,7 @@ async function handleAnalyze(event) {
 
   isAnalyzing = true;
   hasAnalysis = false;
+  didAnalyzeFail = false;
   pendingRecord = null;
   clearAnalysis(analysisResult);
   saveStatus.textContent = "";
@@ -157,10 +159,11 @@ async function handleAnalyze(event) {
     saveButton.disabled = false;
     analysisStatus.textContent = "분석 완료";
   } catch (error) {
+    didAnalyzeFail = true;
     analysisStatus.textContent = error?.message ?? "분석에 실패했습니다. 다시 시도해 주세요.";
   } finally {
     isAnalyzing = false;
-    analyzeButton.textContent = hasAnalysis ? "다시 분석" : "분석";
+    analyzeButton.textContent = hasAnalysis ? "다시 분석" : didAnalyzeFail ? "재시도" : "분석";
     updateInputState();
   }
 }

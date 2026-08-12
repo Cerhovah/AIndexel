@@ -39,4 +39,4 @@ export const SOURCE_TOOLS = [
 export const MAX_INPUT_CHARS = 80000;
 export const SCHEMA_VERSION = "wi-s1";
 export const WORKER_URL = "http://localhost:8787";
-export const USE_FAKE_ANALYZER = true;
+export const USE_FAKE_ANALYZER = false;
