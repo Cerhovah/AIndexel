@@ -4,4 +4,4 @@ compatibility_date = "2026-08-11"
 
 [vars]
 MODEL_NAME = "claude-sonnet-4-6"
-ALLOWED_ORIGINS = "http://localhost:8000"
+ALLOWED_ORIGINS = "https://cerhovah.github.io,http://localhost:8000"
