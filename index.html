@@ -7,8 +7,80 @@
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <main>
-      <h1>WorkIndex</h1>
+    <main class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">Capture once · Compress · Index · Retrieve</p>
+        <h1>WorkIndex</h1>
+        <p class="intro">긴 작업 기록을 붙여넣고 오늘 한 일을 세 문장으로 정리하세요.</p>
+      </header>
+
+      <section class="capture-panel" aria-labelledby="capture-title">
+        <h2 id="capture-title">작업 기록 캡처</h2>
+
+        <form id="capture-form" novalidate>
+          <div class="field">
+            <label for="raw-text">원문</label>
+            <textarea
+              id="raw-text"
+              name="raw_text"
+              rows="14"
+              placeholder="ChatGPT, Claude, Codex 등에서 수행한 작업 기록을 붙여넣으세요."
+              aria-describedby="character-count input-error"
+            ></textarea>
+            <div class="field-meta">
+              <p id="input-error" class="error-message" hidden></p>
+              <output id="character-count" for="raw-text">0 / 80,000</output>
+            </div>
+          </div>
+
+          <div class="source-fields">
+            <div class="field">
+              <label for="source-tool">출처 도구</label>
+              <select id="source-tool" name="source_tool"></select>
+            </div>
+
+            <div class="field">
+              <label for="source-title">제목 <span>(선택)</span></label>
+              <input id="source-title" name="source_title" type="text">
+            </div>
+
+            <div class="field field-wide">
+              <label for="source-locator">원위치 <span>(선택)</span></label>
+              <input
+                id="source-locator"
+                name="source_locator"
+                type="text"
+                placeholder="URL, 파일 경로, 프로젝트 이름"
+              >
+            </div>
+          </div>
+
+          <button id="analyze-button" class="primary-button" type="submit" disabled>분석</button>
+          <p id="analysis-status" class="status-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="analysis-result" class="result-panel" aria-labelledby="result-title" hidden>
+        <div class="result-heading">
+          <p class="eyebrow">Analysis</p>
+          <h2 id="result-title">분석 결과</h2>
+        </div>
+
+        <dl class="sentence-list">
+          <div class="sentence-card">
+            <dt>오늘 한 일</dt>
+            <dd id="result-summary"></dd>
+          </div>
+          <div class="sentence-card">
+            <dt>핵심 피드백</dt>
+            <dd id="result-feedback"></dd>
+          </div>
+          <div class="sentence-card">
+            <dt>다음 행동</dt>
+            <dd id="result-next"></dd>
+          </div>
+        </dl>
+      </section>
     </main>
     <script type="module" src="./src/app.js"></script>
   </body>
