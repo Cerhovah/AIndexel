@@ -14,86 +14,125 @@
         <p class="intro">긴 작업 기록을 붙여넣고 오늘 한 일을 세 문장으로 정리하세요.</p>
       </header>
 
-      <section class="capture-panel" aria-labelledby="capture-title">
-        <h2 id="capture-title">작업 기록 캡처</h2>
+      <nav class="tabs" aria-label="화면 선택" role="tablist">
+        <button id="capture-tab" class="tab-button" type="button" role="tab" aria-controls="capture-screen">캡처</button>
+        <button id="search-tab" class="tab-button" type="button" role="tab" aria-controls="search-screen">검색</button>
+      </nav>
 
-        <form id="capture-form" novalidate>
-          <div class="field">
-            <label for="raw-text">원문</label>
-            <textarea
-              id="raw-text"
-              name="raw_text"
-              rows="14"
-              placeholder="ChatGPT, Claude, Codex 등에서 수행한 작업 기록을 붙여넣으세요."
-              aria-describedby="character-count input-error"
-            ></textarea>
-            <div class="field-meta">
-              <p id="input-error" class="error-message" hidden></p>
-              <output id="character-count" for="raw-text">0 / 80,000</output>
+      <section id="capture-screen" class="screen" role="tabpanel" aria-labelledby="capture-tab">
+        <section class="capture-panel" aria-labelledby="capture-title">
+          <h2 id="capture-title">작업 기록 캡처</h2>
+
+          <form id="capture-form" novalidate>
+            <div class="field">
+              <label for="raw-text">원문</label>
+              <textarea
+                id="raw-text"
+                name="raw_text"
+                rows="14"
+                placeholder="ChatGPT, Claude, Codex 등에서 수행한 작업 기록을 붙여넣으세요."
+                aria-describedby="character-count input-error"
+              ></textarea>
+              <div class="field-meta">
+                <p id="input-error" class="error-message" hidden></p>
+                <output id="character-count" for="raw-text">0 / 80,000</output>
+              </div>
             </div>
+
+            <div class="source-fields">
+              <div class="field">
+                <label for="source-tool">출처 도구</label>
+                <select id="source-tool" name="source_tool"></select>
+              </div>
+
+              <div class="field">
+                <label for="source-title">제목 <span>(선택)</span></label>
+                <input id="source-title" name="source_title" type="text">
+              </div>
+
+              <div class="field field-wide">
+                <label for="source-locator">원위치 <span>(선택)</span></label>
+                <input
+                  id="source-locator"
+                  name="source_locator"
+                  type="text"
+                  placeholder="URL, 파일 경로, 프로젝트 이름"
+                >
+              </div>
+            </div>
+
+            <button id="analyze-button" class="primary-button" type="submit" disabled>분석</button>
+            <p id="analysis-status" class="status-message" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section id="analysis-result" class="result-panel" aria-labelledby="result-title" hidden>
+          <div class="result-heading">
+            <p class="eyebrow">Analysis</p>
+            <h2 id="result-title">분석 결과</h2>
           </div>
 
-          <div class="source-fields">
-            <div class="field">
-              <label for="source-tool">출처 도구</label>
-              <select id="source-tool" name="source_tool"></select>
+          <dl class="sentence-list">
+            <div class="sentence-card">
+              <dt>오늘 한 일</dt>
+              <dd id="result-summary"></dd>
             </div>
+            <div class="sentence-card">
+              <dt>핵심 피드백</dt>
+              <dd id="result-feedback"></dd>
+            </div>
+            <div class="sentence-card">
+              <dt>다음 행동</dt>
+              <dd id="result-next"></dd>
+            </div>
+          </dl>
 
-            <div class="field">
-              <label for="source-title">제목 <span>(선택)</span></label>
-              <input id="source-title" name="source_title" type="text">
-            </div>
-
-            <div class="field field-wide">
-              <label for="source-locator">원위치 <span>(선택)</span></label>
-              <input
-                id="source-locator"
-                name="source_locator"
-                type="text"
-                placeholder="URL, 파일 경로, 프로젝트 이름"
-              >
-            </div>
+          <div class="result-actions">
+            <button id="save-button" class="primary-button" type="button" disabled>저장</button>
+            <p id="save-status" class="status-message" role="status" aria-live="polite"></p>
           </div>
-
-          <button id="analyze-button" class="primary-button" type="submit" disabled>분석</button>
-          <p id="analysis-status" class="status-message" role="status" aria-live="polite"></p>
-        </form>
+        </section>
       </section>
 
-      <section id="analysis-result" class="result-panel" aria-labelledby="result-title" hidden>
-        <div class="result-heading">
-          <p class="eyebrow">Analysis</p>
-          <h2 id="result-title">분석 결과</h2>
-        </div>
-
-        <dl class="sentence-list">
-          <div class="sentence-card">
-            <dt>오늘 한 일</dt>
-            <dd id="result-summary"></dd>
+      <section id="search-screen" class="screen" role="tabpanel" aria-labelledby="search-tab" hidden>
+        <section class="search-panel" aria-labelledby="search-title">
+          <div class="section-heading">
+            <h2 id="search-title">작업 검색</h2>
+            <p id="search-result-count" class="record-count">0건</p>
           </div>
-          <div class="sentence-card">
-            <dt>핵심 피드백</dt>
-            <dd id="result-feedback"></dd>
-          </div>
-          <div class="sentence-card">
-            <dt>다음 행동</dt>
-            <dd id="result-next"></dd>
-          </div>
-        </dl>
+          <label class="search-label" for="search-input">검색어</label>
+          <input id="search-input" type="search" placeholder="프로젝트, 키워드, 작업 내용 검색">
+          <p id="records-status" class="status-message block-status" role="status" aria-live="polite"></p>
+          <ol id="search-results" class="search-results"></ol>
+        </section>
 
-        <div class="result-actions">
-          <button id="save-button" class="primary-button" type="button" disabled>저장</button>
-          <p id="save-status" class="status-message" role="status" aria-live="polite"></p>
-        </div>
-      </section>
+        <details class="settings-panel">
+          <summary>설정</summary>
+          <div class="settings-content">
+            <div class="field">
+              <label for="app-token">APP_TOKEN</label>
+              <div class="inline-controls">
+                <input id="app-token" type="password" autocomplete="off">
+                <button id="save-token-button" class="secondary-button" type="button">저장</button>
+              </div>
+              <p id="token-status" class="status-message block-status" role="status" aria-live="polite"></p>
+            </div>
 
-      <section class="recent-panel" aria-labelledby="recent-title">
-        <div class="section-heading">
-          <h2 id="recent-title">최근 기록</h2>
-          <p id="record-count" class="record-count">0건</p>
-        </div>
-        <p id="records-status" class="status-message" role="status" aria-live="polite"></p>
-        <ol id="recent-records" class="recent-records"></ol>
+            <dl class="settings-status-list">
+              <div>
+                <dt>영구 저장</dt>
+                <dd id="persistence-status">미허용</dd>
+              </div>
+              <div>
+                <dt>저장된 기록</dt>
+                <dd id="record-count">0건</dd>
+              </div>
+            </dl>
+
+            <button id="export-button" class="secondary-button" type="button">전체 JSON 내보내기</button>
+            <p id="export-status" class="status-message" role="status" aria-live="polite"></p>
+          </div>
+        </details>
       </section>
     </main>
     <script type="module" src="./src/app.js"></script>
